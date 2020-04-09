@@ -1,9 +1,14 @@
 import React, { useState } from 'react';
-import { Button, Modal, List } from 'antd';
+import { Button, Modal, List, Input, DatePicker  } from 'antd';
 import 'antd/dist/antd.css';
 
+const { TextArea } = Input;
+import moment from 'moment';
+
 export const CelebrityList = () => {
-  state = { addPanelVisible: false };
+  const [state, setState] = React.useState({
+    addPanelVisible: false
+  })
   const data = [
     'Robert Downy, Jr.',
     'Chris Hemsworth',
@@ -20,24 +25,18 @@ export const CelebrityList = () => {
 
   onAddCelebrity = (event) => {
     console.log("adding");
-    this.setState({
-      addPanelVisible: true,
-    });
+    setState({...state, addPanelVisible: true});
   };
 
 
   handleAddOk = e => {
     console.log(e);
-    this.setState({
-      visible: false,
-    });
+    setState({...state, addPanelVisible: false});
   };
 
   handleAddCancel = e => {
     console.log(e);
-    this.setState({
-      visible: false,
-    });
+    setState({...state, addPanelVisible: false});
   };
 
   return (
@@ -65,14 +64,31 @@ export const CelebrityList = () => {
         )}
       />
       <Modal
-        title="Basic Modal"
-        visible={this.state.addPanelVisible}
+        title="Add a celebrity"
+        visible={state.addPanelVisible}
         onOk={this.handleAddOk}
         onCancel={this.handleAddCancel}
+        footer={[
+          <Button key="Cancel" onClick={this.handleCancel}>
+            Return
+          </Button>,
+          <Button key="Save" type="primary" onClick={this.handleOk}>
+            Submit
+          </Button>,
+        ]}
       >
-        <p>Some contents...</p>
-        <p>Some contents...</p>
-        <p>Some contents...</p>
+        <Input addonBefore="First Name" defaultValue="" />
+        <div style={{ margin: '24px 0' }} />
+        <Input addonBefore="Last Name" defaultValue="" />
+        <div style={{ margin: '24px 0' }} />
+        <p>Date of Birth:</p>
+        <DatePicker defaultValue={moment('2000/01/01')}/>
+        <div style={{ margin: '24px 0' }} />
+        <p>About the Celebrity:</p>
+        <TextArea
+          placeholder="Describe him/her..."
+          autoSize={{ minRows: 2, maxRows: 10 }}
+        />
       </Modal>
     </div>
   );
