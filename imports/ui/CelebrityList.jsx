@@ -39,7 +39,11 @@ class CelebrityList extends Component {
 
     if(this.state.sort == SORT_ASC) {
       celebs = celebs.sort(function(a, b) {
-          return a.lastname+a.firstname > b.lastname+b.firstname? 1: -1;
+        if(a.lastname == b.lastname) {
+          return a.firstname > b.firstname? 1: -1
+        } else {
+          return a.lastname > b.lastname? 1: -1;
+        }
       });
     }
     return celebs;
